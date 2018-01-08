@@ -104,9 +104,9 @@ mongoClient.connect(url, (error, db) => {
                 rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
               }
             })
-            break; 
-          case "7":         
-            db.collection('companies').find({}, { name: 1, number_of_employees: 1, _id: 0 }).sort({number_of_employees: -1}).limit(10).toArray((error, result) => {
+            break;
+          case "7":
+            db.collection('companies').find({}, { name: 1, number_of_employees: 1, _id: 0 }).sort({ number_of_employees: -1 }).limit(10).toArray((error, result) => {
               if (error) {
                 console.log(error);
                 rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
@@ -115,9 +115,9 @@ mongoClient.connect(url, (error, db) => {
                 rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
               }
             })
-            break; 
+            break;
           case "8":
-            db.collection('companies').find({'name':'Facebook'},{'name':1}).toArray((error, result) => {
+            db.collection('companies').find({ 'name': 'Facebook' }, { 'name': 1 }).toArray((error, result) => {
               if (error) {
                 console.log(error);
                 rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
@@ -128,7 +128,7 @@ mongoClient.connect(url, (error, db) => {
             })
             break;
           case "9":
-            db.collection('companies').find({ 'name': 'Facebook' }, { 'name': 1, 'number_of_employees':1,'_id':0 }).toArray((error, result) => {
+            db.collection('companies').find({ 'name': 'Facebook' }, { 'name': 1, 'number_of_employees': 1, '_id': 0 }).toArray((error, result) => {
               if (error) {
                 console.log(error);
                 rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
@@ -139,12 +139,12 @@ mongoClient.connect(url, (error, db) => {
             })
             break;
           case "10":
-            db.collection('companies').find({ 'name': 'Facebook' }, { 'products.name':1, '_id': 0 }).toArray((error, result) => {
+            db.collection('companies').find({ 'name': 'Facebook' }, { 'products.name': 1, '_id': 0 }).toArray((error, result) => {
               if (error) {
                 console.log(error);
                 rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
               } else {
-                result.forEach(elem=>{
+                result.forEach(elem => {
                   console.log(elem);
                 });
                 rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
