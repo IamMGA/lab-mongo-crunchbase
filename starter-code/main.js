@@ -3,8 +3,8 @@ const mongoClient = MongoDB.MongoClient;
 const clear = require('clear');
 const readline = require('readline');
 const rl = readline.createInterface({
-	input: process.stdin,
-	output: process.stdout
+  input: process.stdin,
+  output: process.stdout
 });
 
 const url = `mongodb://localhost:27017/crunchbase`
@@ -26,15 +26,15 @@ mongoClient.connect(url, (error, db) => {
   } else {
     console.log('Connection established correctly!! 😬');
 
-    function mainMenu(){
+    function mainMenu() {
       clear();
       printMenu();
       rl.question('Type an option: ', (option) => {
-        switch(option){
+        switch (option) {
           case "1":
             // console.log('you typed 1');
             // rl.question(`\nType enter to continue: `, (answer) => {mainMenu()});
-            db.collection('companies').find({}, {name: 1, _id: 0}).toArray((error, result) => {
+            db.collection('companies').find({}, { name: 1, _id: 0 }).toArray((error, result) => {
               if (error) {
                 console.log(error);
                 rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
@@ -57,6 +57,43 @@ mongoClient.connect(url, (error, db) => {
               }
             })
             break;
+          case "3":
+            db.collection('companies').find({ 'founded_year': 2004 }).count((error, result) => {
+              if (error) {
+                console.log(error);
+                rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+              } else {
+                console.log(result);
+                rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+              }
+            })
+            break;
+          case "4":
+            db.collection('companies').find(
+              { 'founded_month': 2, 'founded_year': 2004 },
+              { name: 1, _id: 0 }).toArray((error, result) => {
+                if (error) {
+                  console.log(error);
+                  rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                } else {
+                  console.log(result);
+                  rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                }
+              })
+            break;
+          case "5":
+            db.collection('companies').find(
+              { 'founded_year': 2004, 'founded_month': { $gte: 4, $lte: 6 } },
+              { name: 1, _id: 0 }).sort({ 'founded_day': 1, 'founded_month': 1, 'founded_month': 1 }).toArray((error, result) => {
+                if (error) {
+                  console.log(error);
+                  rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                } else {
+                  console.log(result);
+                  rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                }
+              })
+            break;
           case "0":
             console.log(`👋👋👋👋 😞 \n`);
             db.close((error) => { process.exit(0) });
@@ -66,15 +103,15 @@ mongoClient.connect(url, (error, db) => {
             break;
         }
       });
-	}
+    }
 
     mainMenu();
 
   }
 });
 
-function printMenu(){
-	console.log(`
+function printMenu() {
+  console.log(`
 0.- Exit
 1.- List by name all companies.
 2.- How many companies are there?
